@@ -1,0 +1,22 @@
+<a class="btn" id="btnFilms" onclick="location.href='#!/';">Back to films</a>
+<div class="movie_card bright" ng-repeat='newElem in favorite.filmsFavorite'>
+	<div class="info_section">
+		<div class="movie_header">
+			<input type="button" id="removeButton" class="btn btn-danger" value="Remove from favorite" ng-click='favorite.removeItem($index)'>
+			<img class="locandina" src="http://image.tmdb.org/t/p/w300/{{newElem.poster_path}}" />
+			<h3>{{new.title}}</h3>
+			<h5>Rating: {{new.vote_average}}/10 ({{new.popularity}})</h5>
+			<h5>
+				<span>Genre: </span>
+				<span ng-repeat="genId in new.genre_ids">
+                <span ng-repeat="g in favorite.genres" ng-if="g.id==genId">{{g.name}}</span>
+				</span>
+			</h5>
+			<h5>Release date: {{new.release_date}}</h5>
+		</div>
+		<div class="movie_desc">
+			<p class="text">{{newElem.overview | limitTo: 155}}<span ng-if="newElem.overview.length>145">...</span></p>
+			<a href="#!/details" class="btn btn-outline-secondary" id="btnShow" ng-click='favorite.showDetails($index)'>Show details</a>
+		</div>
+	</div>
+</div>

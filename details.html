@@ -1,0 +1,21 @@
+<a class="btn" id="btnFilms" onclick="location.href='#!/';">Back to films</a>
+<div class="movie_card bright" ng-repeat='new in details.filmsDet'>
+	<div class="info_section">
+		<div class="movie_header">
+			<img class="locandina" src="http://image.tmdb.org/t/p/w300/{{new.poster_path}}" />
+			<input type="button" id="btnFavorite" class="btn btn-outline-success" value="Add to favorite" ng-click='details.addFilm($index)'>
+			<h3>{{new.title}}</h3>
+			<h5>Rating: {{new.vote_average}}/10 ({{new.popularity}})</h5>
+			<h5>
+				<span>Genre: </span>
+				<span ng-repeat="genId in new.genre_ids">
+                <span ng-repeat="g in details.genres" ng-if="g.id==genId">{{g.name}}</span>
+				</span>
+			</h5>
+			<h5>Release date: {{new.release_date}}</h5>
+		</div>
+		<div class="movie_desc">
+			<p class="text">{{new.overview}}</p>
+		</div>
+	</div>
+</div>

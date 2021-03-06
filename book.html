@@ -1,0 +1,70 @@
+<div class="container-fluid  header">
+	<div id="headMovie">
+		<img class="logo" src="image/59ee852f62990_MovieLOGO.thumb.png.07f3d007014d10a250dc293cdff00eda.png" alt="">
+	</div>
+	<div class="row flex-row-reverse">
+		<form class="ml-3 groupForm buttonSearch">
+			<div class="group">
+				<input type="text" required placeholder="Search film" ng-model='book.search'>
+				<span class="highlight"></span>
+				<span class="bar"></span>
+			</div>
+		</form>
+		<div class="  buttonSave ">
+			<a class="btn" id="btnF" onclick="location.href='#!/favorite';">Saved films</a>
+		</div>
+	</div>
+</div>
+<main>
+	<div class="col-xs-12 col-sm-3  text-center text-info">
+		<h5>Genres:</h5>
+		<select id="select" class="form-control custom-select" ng-model="book.selectedKey" ng-options="obj as obj.name for obj in book.genres"></select>
+	</div>
+	<div id="card" class="movie_card bright" ng-repeat='new in book.films | filter: {title: book.search} | filter:book.filterFn | limitTo: book.pagination.itemsPerPage : (book.pagination.itemsPerPage * book.pagination.currentPage)-book.pagination.itemsPerPage'>
+		<div class="info_section">
+			<div class="movie_header">
+				<img class="locandina" src="http://image.tmdb.org/t/p/w300/{{new.poster_path}}" />
+				<input type="button" id="btnFavorite" class="btn btn-outline-success" value="Add to favorite" ng-click='book.addFilm($index)'>
+				<h3>{{new.title}}</h3>
+				<h5>Rating: {{new.vote_average}}/10 ({{new.popularity}})</h5>
+				<h5>
+					<span>Genre: </span>
+					<span ng-repeat="genId in new.genre_ids">
+                <span ng-repeat="g in book.genres" ng-if="g.id==genId">{{g.name}}</span>
+					</span>
+				</h5>
+				<h5>Release date: {{new.release_date}}</h5>
+			</div>
+			<div class="movie_desc">
+				<p class="text">{{new.overview | limitTo: 155}}<span ng-if="new.overview.length>145">...</span>
+					<a href="#!/details" class="btn btn-outline-secondary" id="btnShow" ng-click='book.showDetails($index)'>Show details</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<nav ng-if="book.returnPages() > book.pagination.itemsPerPage" class="p-3 clearfix">
+		<ul class="pagination float-right">
+			<li class="page-item">
+				<a class="page-link" ng-click="book.previous()">Previous</a>
+			</li>
+			<li class="page-item" ng-repeat="i in [] | range:book.func()">
+				<a class="page-link" ng-class="{'page-selected': book.pagination.currentPage == $index+1}" ng-click="book.pagination.currentPage = $index+1">{{$index+1}}</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" ng-click="book.next()">Next</a>
+			</li>
+		</ul>
+	</nav>
+</main>
+<footer class="footer">
+	<div class="cnotainte-fluid">
+		<div class="row">
+			<div class="social d-flex">
+				<a href=""><i class="fab fa-vk" ></i></a>
+				<a href=""><i class="fab fa-facebook" ></i></a>
+				<a href=""><i class="fab fa-instagram"></i></a>
+			</div>
+			<span class="footerDesc">© 2018 by Vasyl Dzyuba. Proudly created with AngularJs</span>
+		</div>
+	</div>
+</footer>
